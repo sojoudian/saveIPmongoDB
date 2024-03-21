@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"net/http"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -16,4 +17,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	fs := http.FileServer(http.Dir("."))
+	http.Handle("/", fs)
+
+	log.Println("Server started on port 3001")
+	log.Fatal(http.ListenAndServe(":3001", nil))
 }
