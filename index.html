@@ -4,6 +4,20 @@
         <title>API Server</title>
     </head>
     <body>
+        <script>
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    fetch('http://example.com/savemongo', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ ip: data.ip }),
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        </script>
         <h1>Welcome to My API Server</h1>
     </body>
 </html>
